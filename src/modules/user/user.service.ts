@@ -13,9 +13,9 @@ import { User } from './schema/user.schema';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectModel(User.name)
-    private readonly userModel: Model<User>
+	constructor(
+		@InjectModel(User.name)
+		private readonly userModel: Model<User>
 	) { }
 
 	public async findAll(limit: number, offset: number): Promise<any> {
@@ -24,6 +24,7 @@ export class UserService {
 
 			return await this.userModel
 				.find()
+				.populate({ path: 'role' })
 				.skip(offset)
 				.limit(limit)
 				.exec();
@@ -31,7 +32,7 @@ export class UserService {
 		} catch (error) {
 
 			Logger.error(error);
-			return new InternalServerErrorException("Something went wrong")
+			return new InternalServerErrorException("Something went wrong");
 		}
 	}
 
@@ -42,11 +43,12 @@ export class UserService {
 				.findOne({
 					...user
 				})
+				.populate({ path: "role", model: "Role" })
 				.exec();
 		} catch (error) {
-			
+
 			Logger.error(error);
-			return new InternalServerErrorException("Something went wrong")
+			return new InternalServerErrorException("Something went wrong");
 		}
 	}
 
@@ -61,7 +63,7 @@ export class UserService {
 		} catch (error) {
 
 			Logger.error(error);
-			return new InternalServerErrorException("Something went wrong")
+			return new InternalServerErrorException("Something went wrong");
 		}
 	}
 
@@ -85,7 +87,7 @@ export class UserService {
 		} catch (error) {
 
 			Logger.error(error);
-			return new InternalServerErrorException("Something went wrong")
+			return new InternalServerErrorException("Something went wrong");
 		}
 	}
 
@@ -99,14 +101,14 @@ export class UserService {
 
 			if (updateUserDto.email) {
 
-				user = await this.userModel.findOne({ email: updateUserDto.email })
+				user = await this.userModel.findOne({ email: updateUserDto.email });
 				if (user && userId !== user.id)
 					return new BadRequestException(`Already exists an user with this email: ${updateUserDto.email}`);
 			}
 
 			if (updateUserDto.username) {
 
-				user = await this.userModel.findOne({ username: updateUserDto.username })
+				user = await this.userModel.findOne({ username: updateUserDto.username });
 				if (user && userId !== user.id)
 					return new BadRequestException(`Already exist an user with this name: ${updateUserDto.username}`);
 			}
@@ -114,12 +116,12 @@ export class UserService {
 			return {
 				message: "User has been successfully updated",
 				user: await this.userModel.findByIdAndUpdate(userId, updateUserDto, { new: true })
-			}
+			};
 
 		} catch (error) {
 
 			Logger.error(error);
-			return new InternalServerErrorException("Something went wrong")
+			return new InternalServerErrorException("Something went wrong");
 		}
 	}
 
@@ -140,7 +142,7 @@ export class UserService {
 		} catch (error) {
 
 			Logger.error(error);
-			return new InternalServerErrorException("Something went wrong")
+			return new InternalServerErrorException("Something went wrong");
 		}
 	}
 }

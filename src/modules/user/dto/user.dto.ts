@@ -1,7 +1,10 @@
-import { IsNotEmpty, IsString, IsEmail,  MinLength } from "class-validator";
-
+import { IsNotEmpty, IsString, IsEmail,  MinLength, IsMongoId } from "class-validator";
+import { Role } from "src/modules/role/schema/role.schema";
 
 export class UserDto {
+
+	@IsMongoId()
+	rol: Role;
 
 	@IsString()
 	@MinLength(2)
