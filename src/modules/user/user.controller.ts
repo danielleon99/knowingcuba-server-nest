@@ -30,23 +30,23 @@ export class UserController {
 
   @Get(":id")
   public async getUser(@Param("id", ParseMongoIdPipe) userId: string) {
-    return await this.userService.findById(userId);
+    return await this.userService.getUserById(userId);
   }
 
   @Post()
   public async addUser(@Body() createUserDto: CreateUserDto) {
-    return await this.userService.create(createUserDto);
+    return await this.userService.createUser(createUserDto);
   }
 
   @Put(":id")
   public async updateUser(
     @Param("id", ParseMongoIdPipe) userId: string,
     @Body() updateUserDto: UpdateUserDto) {
-    return await this.userService.update(userId, updateUserDto);
+    return await this.userService.updateUser(userId, updateUserDto);
   }
 
   @Delete(":id")
   public async deleteUser(@Param("id", ParseMongoIdPipe) userId: string) {
-    return await this.userService.remove(userId);
+    return await this.userService.deleteUser(userId);
   }
 }
