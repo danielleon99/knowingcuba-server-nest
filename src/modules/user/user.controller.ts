@@ -13,7 +13,10 @@ import { ParseIntPipe } from '@nestjs/common';
 import { UserService } from "./user.service";
 import { ParseMongoIdPipe } from "src/common/pipes";
 import { CreateUserDto, UpdateUserDto } from "./dto";
+import { Roles } from "../auth/decorators";
+import { RoleEnum } from '../role/enum/roles.enum';
 
+@Roles(RoleEnum.ADMIN)
 @Controller("users")
 export class UserController {
 

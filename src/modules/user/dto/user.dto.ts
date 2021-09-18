@@ -4,7 +4,7 @@ import { Role } from "src/modules/role/schema/role.schema";
 export class UserDto {
 
 	@IsMongoId()
-	rol: Role;
+	role: Role;
 
 	@IsString()
 	@MinLength(2)

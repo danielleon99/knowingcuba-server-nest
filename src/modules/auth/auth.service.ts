@@ -17,6 +17,8 @@ export class AuthService {
 
         const user = await this.userService.getUserByEmail(email);
 
+        console.log(user);
+
         if (user.password && (await compare(password, user?.password))) {
             return user;
         }
@@ -29,7 +31,8 @@ export class AuthService {
         const payload = {
             name: user.name,
             email: user.email,
-            uid: user.id
+            uid: user.id,
+            role: user.role
         };
 
         return {

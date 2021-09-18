@@ -14,7 +14,10 @@ import { RoleService } from "./role.service";
 import { ParseIntPipe } from '@nestjs/common';
 import { ParseMongoIdPipe } from "src/common/pipes";
 import { CreateRolDto, UpdateRolDto } from "./dto";
+import { Roles } from "../auth/decorators";
+import { RoleEnum } from '../role/enum/roles.enum';
 
+@Roles(RoleEnum.ADMIN)
 @Controller("roles")
 export class RoleController {
   constructor(private roleService: RoleService) { }
