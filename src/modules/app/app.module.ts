@@ -17,10 +17,11 @@ import { APP_GUARD } from '@nestjs/core';
     RoleModule,
     UserModule
   ],
-  providers: [{
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard
-    }
+  providers: [
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: JwtAuthGuard
+    // }
   ]
 
 })

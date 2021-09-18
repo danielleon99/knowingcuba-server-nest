@@ -17,7 +17,7 @@ export class AuthService {
 
         const user = await this.userService.getUserByEmail(email);
 
-        if (user && (await compare(password, user?.password))) {
+        if (user.password && (await compare(password, user?.password))) {
             return user;
         }
 
@@ -30,12 +30,12 @@ export class AuthService {
             name: user.name,
             email: user.email,
             uid: user.id
-        }
+        };
 
         return {
             ok: true,
             access_token: this.jwtService.sign(payload),
             user: payload
-        }
+        };
     }
 }
