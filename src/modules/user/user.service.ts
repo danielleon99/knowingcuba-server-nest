@@ -36,15 +36,18 @@ export class UserService {
 		}
 	}
 
-	public async findOne(user: any): Promise<any> {
+	public async getUserByEmail(email: string): Promise<any> {
 
 		try {
-			return await this.userModel
-				.findOne({
-					...user
-				})
+
+			const user = await this.userModel.findOne({ email })
 				.populate({ path: "role", model: "Role" })
 				.exec();
+
+			if (!user) return new NotFoundException(`User with email: ${email} doesn't exist`);
+
+			return user;
+
 		} catch (error) {
 
 			Logger.error(error);
@@ -52,7 +55,7 @@ export class UserService {
 		}
 	}
 
-	public async findById(userId: string): Promise<any> {
+	public async getUserById(userId: string): Promise<any> {
 
 		try {
 			const user = await this.userModel.findById({ _id: userId }).exec();
@@ -67,7 +70,7 @@ export class UserService {
 		}
 	}
 
-	public async create(createUserDto: CreateUserDto): Promise<any> {
+	public async createUser(createUserDto: CreateUserDto): Promise<any> {
 
 		try {
 
@@ -91,7 +94,7 @@ export class UserService {
 		}
 	}
 
-	public async update(userId: string, updateUserDto: UpdateUserDto): Promise<any> {
+	public async updateUser(userId: string, updateUserDto: UpdateUserDto): Promise<any> {
 
 		try {
 
@@ -125,7 +128,7 @@ export class UserService {
 		}
 	}
 
-	public async remove(userId: string): Promise<any> {
+	public async deleteUser(userId: string): Promise<any> {
 
 		try {
 			const user = await this.userModel.findById({ _id: userId }).exec();
